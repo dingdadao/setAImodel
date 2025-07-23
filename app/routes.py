@@ -41,13 +41,20 @@ async def log_request(request: Request, db: Session = Depends(get_db)):
     if exists:
         return {"status": "logged"}
 
+    # 判断所有字段是否都有值
+    if ip and ua and referer and url and cookie:
+        entry_status = STATUS_VALID
+    else:
+        entry_status = STATUS_PENDING
+
     entry = IPRequest(
         ip=ip,
         ua=ua,
         referer=referer,
         url=url,
-        cookie= cookie,
+        cookie=cookie,
         server_md5=server_md5,
+        status=entry_status,
     )
     db.add(entry)
     db.commit()
