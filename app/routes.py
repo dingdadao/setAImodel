@@ -41,11 +41,23 @@ async def log_request(request: Request, db: Session = Depends(get_db)):
     if exists:
         return {"status": "logged"}
 
+
+# STATUS_PENDING = 0 # 待处理
+# STATUS_VALID = 1 # 通过
+# STATUS_INVALID = 2 # 需要检查
+# STATUS_BLOCKED = 3 # 拒绝
+
     # 判断所有字段是否都有值
-    if ip and ua and referer and url and cookie:
+    entry_status = STATUS_PENDING
+    if ip and ua and referer and cookie:
         entry_status = STATUS_VALID
-    else:
-        entry_status = STATUS_PENDING
+
+    if ip and ua and referer:
+        entry_status = STATUS_VALID
+    
+    if not referer and not cookie:
+        entry_status = STATUS_BLOCKED
+        
 
     entry = IPRequest(
         ip=ip,
