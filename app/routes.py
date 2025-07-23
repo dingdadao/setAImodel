@@ -34,26 +34,20 @@ async def log_request(request: Request, db: Session = Depends(get_db)):
     if not ua:
         ua = user_agent
 
-    print(f"收到数据: ip={ip}, ua={ua}, referer={referer}, url={url}, user_agent={user_agent}, cookie={cookie}")
 
     server_md5 = calc_md5(ip, ua, referer, url)
-    print(f"生成的server_md5: {server_md5}")
 
     # 判断所有字段是否都有值
     entry_status = STATUS_PENDING
     if ip and ua and referer and cookie:
-        print("命中: ip, ua, referer, cookie 都有，status=STATUS_VALID")
         entry_status = STATUS_VALID
 
     if ip and ua and referer:
-        print("命中: ip, ua, referer 都有，status=STATUS_VALID")
         entry_status = STATUS_VALID
     
     if not referer and not cookie:
-        print("命中: referer和cookie都没有，status=STATUS_BLOCKED")
         entry_status = STATUS_BLOCKED
 
-    print(f"最终写入status: {entry_status}")
 
     entry = IPRequest(
         ip=ip,
@@ -66,5 +60,4 @@ async def log_request(request: Request, db: Session = Depends(get_db)):
     )
     db.add(entry)
     db.commit()
-    print(f"写入数据库: id={entry.id}, status={entry.status}")
     return {"status": "logged"}

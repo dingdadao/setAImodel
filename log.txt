@@ -4,3 +4,32 @@ INFO:     Started reloader process [62924] using StatReload
 INFO:     Started server process [62927]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+收到数据: ip=qqqq, ua=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36, referer=https://emby.niao.fun/web/index.html, url=https://emby.niao.fun/web/index.html?00000, user_agent=Mozilla/5.0 (Linux; Android 7.0; SM-G950U Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 , cookie=cf_clearance=9ZUWLdfIzIcngrQ1VdMEHMGG9rZvXEe0M24SJz29Hog-1752137343-1.2.1.1-cB5n_G62vVED6teayLl.ivpZwwadA6LEDcWHFSrNdc3XcoMikk9pzLpVGjwQx5gJXE6potE3w4q7uh.JKQ.ND8OmY3zoOpqNqlwhn3LgVrg9DQoC94sPNKbLijezygtylZEu_h5xzclyzryutqJpJ9Zm8mFBzIBWwJ_k_CqvaW58aQh8PYu48f7y8avVDoPM8iiXIzWhRJwT_YYA_UzxNojyzR3RCygV7sspMZsjmQk
+生成的server_md5: b966b2a256a90bd8632426636997560f
+命中: ip, ua, referer, cookie 都有，status=STATUS_VALID
+命中: ip, ua, referer 都有，status=STATUS_VALID
+最终写入status: 1
+写入数据库: id=592, status=1
+INFO:     127.0.0.1:51808 - "POST /log HTTP/1.1" 200 OK
+收到数据: ip=qqqq, ua=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36, referer=https://emby.niao.fun/web/index.html, url=https://emby.niao.fun/web/index.html?00000, user_agent=Mozilla/5.0 (Linux; Android 7.0; SM-G950U Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 , cookie=cf_clearance=9ZUWLdfIzIcngrQ1VdMEHMGG9rZvXEe0M24SJz29Hog-1752137343-1.2.1.1-cB5n_G62vVED6teayLl.ivpZwwadA6LEDcWHFSrNdc3XcoMikk9pzLpVGjwQx5gJXE6potE3w4q7uh.JKQ.ND8OmY3zoOpqNqlwhn3LgVrg9DQoC94sPNKbLijezygtylZEu_h5xzclyzryutqJpJ9Zm8mFBzIBWwJ_k_CqvaW58aQh8PYu48f7y8avVDoPM8iiXIzWhRJwT_YYA_UzxNojyzR3RCygV7sspMZsjmQk
+生成的server_md5: b966b2a256a90bd8632426636997560f
+命中: ip, ua, referer, cookie 都有，status=STATUS_VALID
+命中: ip, ua, referer 都有，status=STATUS_VALID
+最终写入status: 1
+写入数据库: id=29, status=1
+INFO:     127.0.0.1:52665 - "POST /log HTTP/1.1" 200 OK
+收到数据: ip=qqqq, ua=Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36, referer=https://emby.niao.fun/web/index.html, url=https://emby.niao.fun/web/index.html?00000, user_agent=Mozilla/5.0 (Linux; Android 7.0; SM-G950U Build/NRD90M) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Mobile Safari/537.36 , cookie=cf_clearance=9ZUWLdfIzIcngrQ1VdMEHMGG9rZvXEe0M24SJz29Hog-1752137343-1.2.1.1-cB5n_G62vVED6teayLl.ivpZwwadA6LEDcWHFSrNdc3XcoMikk9pzLpVGjwQx5gJXE6potE3w4q7uh.JKQ.ND8OmY3zoOpqNqlwhn3LgVrg9DQoC94sPNKbLijezygtylZEu_h5xzclyzryutqJpJ9Zm8mFBzIBWwJ_k_CqvaW58aQh8PYu48f7y8avVDoPM8iiXIzWhRJwT_YYA_UzxNojyzR3RCygV7sspMZsjmQk
+生成的server_md5: b966b2a256a90bd8632426636997560f
+命中: ip, ua, referer, cookie 都有，status=STATUS_VALID
+命中: ip, ua, referer 都有，status=STATUS_VALID
+最终写入status: 1
+写入数据库: id=1, status=1
+INFO:     127.0.0.1:52715 - "POST /log HTTP/1.1" 200 OK
+WARNING:  StatReload detected changes in 'app/routes.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [62927]
+INFO:     Started server process [63655]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
