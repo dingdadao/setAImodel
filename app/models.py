@@ -12,6 +12,6 @@ class IPRequest(Base):
     url = Column(String(1024))
     user_agent = Column(String(255))
     cookie = Column(String(2048))
-    server_md5 = Column(String(64))
+    server_md5 = Column(String(64), unique=True, index=True)
     status = Column(Integer, default=0)
 
