@@ -2,4 +2,4 @@
 #uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 source .venv/bin/activate
-nohup uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload > log.txt 2>&1 &
+nohup uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload > /tmp/log.txt 2>&1 &
