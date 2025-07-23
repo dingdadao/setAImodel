@@ -33,3 +33,11 @@ INFO:     Finished server process [62927]
 INFO:     Started server process [63655]
 INFO:     Waiting for application startup.
 INFO:     Application startup complete.
+WARNING:  StatReload detected changes in 'app/routes.py'. Reloading...
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [63655]
+INFO:     Started server process [63842]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.

@@ -37,6 +37,11 @@ async def log_request(request: Request, db: Session = Depends(get_db)):
 
     server_md5 = calc_md5(ip, ua, referer, url)
 
+    # 检查是否已存在相同的server_md5
+    exists = db.query(IPRequest).filter_by(server_md5=server_md5).first()
+    if exists:
+        return {"status": "logged"}
+
     # 判断所有字段是否都有值
     entry_status = STATUS_PENDING
     if ip and ua and referer and cookie:
