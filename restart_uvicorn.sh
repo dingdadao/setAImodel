@@ -15,4 +15,4 @@ fi
 
 echo "🚀 启动 uvicorn..."
 source .venv/bin/activate
-uvicorn app.main:app --host 0.0.0.0 --port $PORT
+nohup uvicorn app.main:app --host 0.0.0.0 --port $PORT --reload > /tmp/log.txt 2>&1 &
