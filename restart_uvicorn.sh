@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#ps aux | grep uvicorn
+
 PORT=8000
 
 echo "🔍 查找占用 $PORT 端口的进程..."
