@@ -1,6 +1,4 @@
-fastapi
-uvicorn
-sqlalchemy
-pymysql
-cryptography>=39.0
-python-multipart
+fastapi~=0.116.1
+redis~=6.2.0
+sqlalchemy~=2.0.41
+httpx~=0.28.1
