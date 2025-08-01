@@ -28,9 +28,9 @@ def get_db():
 
 # 支持多个网段
 IP_WHITELIST = [
-    ipaddress.ip_network("10.0.0.0/24"),
-    ipaddress.ip_network("192.168.1.0/24"),
-    ipaddress.ip_network("127.0.0.0/8"),
+    ipaddress.ip_network("116.162.157.224/27 "),
+    ipaddress.ip_network("124.232.146.128/26"),
+    ipaddress.ip_network("119.39.77.0/24"),
 ]
 
 def is_ip_whitelisted(ip: str) -> bool:
