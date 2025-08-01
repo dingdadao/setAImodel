@@ -8,6 +8,7 @@ from .cache import redis_client
 from .database import SessionLocal
 from .models import IPRequest, IPCache
 from .tbag import calc_md5
+import ipaddress
 
 router = APIRouter()
 
@@ -15,7 +16,7 @@ router = APIRouter()
 STATUS_PENDING = 0
 STATUS_VALID = 1
 STATUS_INVALID = 2
-STATUS_BLOCKED = 3
+STATUS_BLOCKED = 3 # 手动拒绝
 
 def get_db():
     db = SessionLocal()
@@ -24,6 +25,20 @@ def get_db():
     finally:
         db.close()
 
+
+# 支持多个网段
+IP_WHITELIST = [
+    ipaddress.ip_network("10.0.0.0/24"),
+    ipaddress.ip_network("192.168.1.0/24"),
+    ipaddress.ip_network("127.0.0.0/8"),
+]
+
+def is_ip_whitelisted(ip: str) -> bool:
+    try:
+        ip_obj = ipaddress.ip_address(ip)
+        return any(ip_obj in net for net in IP_WHITELIST)
+    except ValueError:
+        return False  # 无效IP默认不跳过
 @router.post("/log")
 async def log_request(request: Request, db: Session = Depends(get_db)):
     data = await request.form()
@@ -34,11 +49,11 @@ async def log_request(request: Request, db: Session = Depends(get_db)):
     user_agent = data.get("user_agent", "")
     cookie = data.get("cookie", "")
 
-    if not ip:
+    if not is_ip_whitelisted(ip):
         return {"status": "pass"}
+
     if not ua:
         ua = user_agent
-
 
     server_md5 = calc_md5(ip, ua, referer, url)
 
@@ -55,8 +70,8 @@ async def log_request(request: Request, db: Session = Depends(get_db)):
     if ip and ua and referer:
         entry_status = STATUS_VALID
     
-    if not referer and not cookie:
-        entry_status = STATUS_BLOCKED
+    if not referer and not ua:
+        entry_status = STATUS_INVALID
 
 
     entry = IPRequest(
@@ -149,3 +164,46 @@ async def ip_request(
     await redis_client.set(redis_key, json.dumps(result), ex=86400)
 
     return {"code":200, **result}
+
+
+@router.get("/ip_stop")
+async def ipStop_request(
+    request: Request,
+    ip: str = Query(..., description="要查询的IP地址"),
+    db: Session = Depends(get_db)
+):
+    REDIS_PREFIX = "ipstop:"
+    REDIS_TTL = 300
+    # 1️⃣ 校验IP格式合法性
+    try:
+        ipaddress.ip_address(ip)
+    except ValueError:
+        await redis_client.setex(f"{REDIS_PREFIX}{ip}", REDIS_TTL, "400")
+        return {"code": 400, "msg": "非法IP地址"}
+
+    # 2️⃣ 查询Redis缓存
+    cache_key = f"{REDIS_PREFIX}{ip}"
+    cached_code = await redis_client.get(cache_key)
+    if cached_code:
+        code = int(cached_code)
+        msg = "非法IP地址" if code == 400 else ("需要校验" if code == 2198 else "")
+        return {"code": code, "msg": msg}
+
+    # 3️⃣ 查询数据库
+    record = db.query(IPRequest).filter_by(ip=ip).order_by(IPRequest.id.desc()).first()
+
+    # 4️⃣ 判断并设置缓存
+    if not record:
+        await redis_client.setex(cache_key, REDIS_TTL, 200)
+        return {"code": 200, "msg": ""}
+
+    if record.status == STATUS_BLOCKED:
+        await redis_client.setex(cache_key, REDIS_TTL, 2199)
+        return {"code": 2199, "msg": ""}
+
+    if record.status == STATUS_INVALID:
+        await redis_client.setex(cache_key, REDIS_TTL, 2198)
+        return {"code": 2198, "msg": "系统错误..."}
+
+    await redis_client.setex(cache_key, REDIS_TTL, 200)
+    return {"code": 200, "msg": ""}
