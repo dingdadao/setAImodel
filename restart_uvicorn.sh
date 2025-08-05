@@ -24,13 +24,5 @@ else
 fi
 
 # 启动服务
-nohup .venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2 > uvicorn.log 2>&1 &
+exec .venv/bin/uvicorn app.main:app --host 0.0.0.0 --port 8000 --workers 2
 
-sleep 1
-
-# 检查是否成功启动
-if pgrep -f "uvicorn app.main:app" > /dev/null; then
-    echo "✅ 启动完成"
-else
-    echo "❌ 启动失败，请查看 uvicorn.log 日志"
-fi
